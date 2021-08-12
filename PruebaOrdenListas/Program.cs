@@ -38,18 +38,32 @@ namespace PruebaOrdenListas
 		new Test { nid = "7E10001", nombre = "Segundo" ,cargo = "Ministro"}
 	};
 			List<Test> Sorted = new List<Test>();
+			
 			foreach (JerarquiaCls item in Jerarquias)
 			{
 				foreach (Test x in Unsorted)
 				{
-					if (x.cargo == item.cargo)
+					var existe = item.ExisteEn(Sorted, x);
+					if (!existe)
 					{
-						Sorted.Add(x);
+						if (x.cargo == item.cargo)
+						{
+							Sorted.Add(x);
+						}
+					
 					}
-					Console.WriteLine(x.nid + " - " + x.nombre + " - " + x.cargo);
 				}
 			};
+
+			foreach (var x in Sorted)
+            {
+				Console.WriteLine(x.nid + " - " + x.nombre + " - " + x.cargo);
+			};
+
+			Console.ReadKey();
 		}
+
+        
     }
 
 	class Test
@@ -63,6 +77,18 @@ namespace PruebaOrdenListas
 	{
 		public int id { get; set; }
 		public string cargo { get; set; }
+		public Boolean ExisteEn(List<Test> lista, Test item)
+		{
+			foreach (var x in lista)
+			{
+				if (x.cargo == item.cargo)
+				{ return true; }
+			}
+
+			return false;
+
+
+		}
 	};
 }
 
